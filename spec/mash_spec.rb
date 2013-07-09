@@ -43,7 +43,7 @@ describe WsHashie::Mash do
   end 
    
   it "author should return <WsHashie::Mash name='Michael Bleigh'>" do
-    mash.author = {:name => 'Michael Bleigh'}
+    mash.author!.name = 'Michael Bleigh'
     expect(mash.author).to eq('<WsHashie::Mash name="Michael Bleigh">')
   end
 end

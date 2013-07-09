@@ -13,6 +13,10 @@ module WsHashie
       when '='
         key = name_s.chomp '='
         value! key, args[0]
+      when '!'
+        key = (name_s.chomp '!').to_sym
+        @hash[key] ||= Mash.new
+        @hash[key]
       else
         key = name
         value key
@@ -25,9 +29,9 @@ module WsHashie
 
     private
     def value(key)
-      value = @hash[key]
-      if value.class == Hash
-        inspect_s value
+      value = @hash[key.to_sym]
+      if value.class == Mash
+        value.inspect
       else
         value
       end
@@ -49,8 +53,5 @@ module WsHashie
       str = hash.reduce("") {|str, (key, value)| str + " #{key}=\"#{value}\","}
       str.chomp(',')
     end
-    
-    
-    
   end
 end
