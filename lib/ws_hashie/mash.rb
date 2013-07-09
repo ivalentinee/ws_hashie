@@ -19,7 +19,7 @@ module WsHashie
     end
 
     def inspect
-      return "<#{self.class} name=\"#{@hash[:name]}\">"
+      return "<#{self.class}#{hash_to_s}>"
     end
     
     private
@@ -35,5 +35,9 @@ module WsHashie
       !@hash[key.to_sym].nil?
     end
     
+    def hash_to_s
+      str = @hash.reduce("") {|str, (key, value)| str + " #{key}=\"#{value}\","}
+      str.chomp(',')
+    end
   end
 end

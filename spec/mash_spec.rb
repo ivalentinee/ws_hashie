@@ -37,7 +37,8 @@ describe WsHashie::Mash do
   it "mammal? should return 'true'" do
     mash.mammal?.should be_true
   end
-
+  
+  it "inspect should return <WsHashie::Mash name='My Mash', mammal='My Mammal'>" do
+    mash.inspect.should eq('<WsHashie::Mash name="My Mash", mammal="My Mammal">')
+  end  
 end
-
-
