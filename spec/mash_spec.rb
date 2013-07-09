@@ -40,5 +40,10 @@ describe WsHashie::Mash do
   
   it "inspect should return <WsHashie::Mash name='My Mash', mammal='My Mammal'>" do
     mash.inspect.should eq('<WsHashie::Mash name="My Mash", mammal="My Mammal">')
-  end  
+  end 
+   
+  it "author should return <WsHashie::Mash name='Michael Bleigh'>" do
+    mash.author = {:name => 'Michael Bleigh'}
+    expect(mash.author).to eq('<WsHashie::Mash name="Michael Bleigh">')
+  end
 end

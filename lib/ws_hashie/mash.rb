@@ -10,7 +10,7 @@ module WsHashie
         key?(key)
       else if name.to_s.end_with?('=')
         key = name.to_s.chomp('=')
-        value!(key, args[0])      
+        value!(key, args[0])    
       else 
         key = name
         value(key)
@@ -19,12 +19,17 @@ module WsHashie
     end
 
     def inspect
-      return "<#{self.class}#{hash_to_s}>"
+      inspect_s(@hash)
     end
-    
+
     private
     def value(key)
-      @hash[key]
+      value = @hash[key]
+      if value.class == Hash
+        inspect_s(value)
+      else
+        value
+      end
     end
     
     def value!(key, value)
@@ -35,9 +40,16 @@ module WsHashie
       !@hash[key.to_sym].nil?
     end
     
-    def hash_to_s
-      str = @hash.reduce("") {|str, (key, value)| str + " #{key}=\"#{value}\","}
+    def inspect_s(hash)
+      "<#{self.class}#{hash_to_s(hash)}>"   
+    end
+    
+    def hash_to_s(hash)
+      str = hash.reduce("") {|str, (key, value)| str + " #{key}=\"#{value}\","}
       str.chomp(',')
     end
+    
+    
+    
   end
 end
