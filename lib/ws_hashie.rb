@@ -1,5 +1,5 @@
 require "ws_hashie/version"
 
 module WsHashie
-  # Your code goes here...
+  autoload 'Mash', 'ws_hashie/mash'
 end

@@ -7,15 +7,14 @@ module WsHashie
     def method_missing(name, *args, &block)
       if name.to_s.end_with?('?')
         key = name.to_s.chomp('?')
-        return key?(key)
-      
+        key?(key)
       else if name.to_s.end_with?('=')
         key = name.to_s.chomp('=')
         value!(key, args[0])      
       else 
         key = name
-        return value(key)
-       end 
+        value(key)
+      end 
       end
     end
 
