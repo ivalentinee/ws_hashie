@@ -17,6 +17,15 @@ module WsHashie
         key = (name_s.chomp '!').to_sym
         @hash[key] ||= Mash.new
         @hash[key]
+      when '_'
+        key = (name_s.chomp '_').to_sym
+        value = @hash[key]
+        if value.class == Mash
+          value
+        else
+          Mash.new
+        end
+       
       else
         key = name
         value key
@@ -50,7 +59,13 @@ module WsHashie
     end
     
     def hash_to_s(hash)
-      str = hash.reduce("") {|str, (key, value)| str + " #{key}=\"#{value}\","}
+      str = hash.reduce("") do |str, (key, value)|
+        if value.class == Mash
+          str
+        else
+          str + " #{key}=\"#{value}\","
+        end
+      end
       str.chomp(',')
     end
   end
