@@ -5,28 +5,29 @@ module WsHashie
     end
     
     def method_missing(name, *args, &block)
-      if name.to_s.end_with?('?')
-        key = name.to_s.chomp('?')
-        key?(key)
-      else if name.to_s.end_with?('=')
-        key = name.to_s.chomp('=')
-        value!(key, args[0])    
-      else 
+      name_s = name.to_s
+      case name_s[-1, 1]
+      when '?'
+        key = name_s.chomp '?'
+        key? key
+      when '='
+        key = name_s.chomp '='
+        value! key, args[0]
+      else
         key = name
-        value(key)
-      end 
+        value key
       end
     end
 
     def inspect
-      inspect_s(@hash)
+      inspect_s @hash
     end
 
     private
     def value(key)
       value = @hash[key]
       if value.class == Hash
-        inspect_s(value)
+        inspect_s value
       else
         value
       end
@@ -41,7 +42,7 @@ module WsHashie
     end
     
     def inspect_s(hash)
-      "<#{self.class}#{hash_to_s(hash)}>"   
+      "<#{self.class}#{hash_to_s hash}>"   
     end
     
     def hash_to_s(hash)
