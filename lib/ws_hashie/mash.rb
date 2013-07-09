@@ -1,15 +1,40 @@
 module WsHashie
   class Mash
-    def name?
-      !@name.nil?
+    def initialize
+      @hash = Hash.new
+    end
+    
+    def method_missing(name, *args, &block)
+      if name.to_s.end_with?('?')
+        key = name.to_s.chomp('?')
+        return key?(key)
+      
+      else if name.to_s.end_with?('=')
+        key = name.to_s.chomp('=')
+        value!(key, args[0])      
+      else 
+        key = name
+        return value(key)
+       end 
+      end
     end
 
-    def name=(name)
-      @name = name
+    def inspect
+      return "<#{self.class} name=\"#{@hash[:name]}\">"
     end
-
-    def name
-      @name
+    
+    private
+    def value(key)
+      @hash[key]
     end
+    
+    def value!(key, value)
+      @hash[key.to_sym] = value
+    end
+    
+    def key?(key)
+      !@hash[key.to_sym].nil?
+    end
+    
   end
 end

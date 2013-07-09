@@ -1,5 +1,20 @@
 module WsHashie
   class Mash
-      
+    def name?
+      !@name.nil?
+    end
+
+    def name=(name)
+      @name = name
+    end
+
+    def name
+      @name
+    end
+
+    def inspect
+      return "<#{self.class} name=\"MyMash\">"
+    end
+    
   end
 end
