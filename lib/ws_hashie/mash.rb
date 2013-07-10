@@ -25,15 +25,10 @@ module WsHashie
         else
           Mash.new
         end
-       
       else
         key = name
         value key
       end
-    end
-
-    def inspect
-      inspect_s @hash
     end
 
     private
@@ -52,21 +47,6 @@ module WsHashie
     
     def key?(key)
       !@hash[key.to_sym].nil?
-    end
-    
-    def inspect_s(hash)
-      "<#{self.class}#{hash_to_s hash}>"   
-    end
-    
-    def hash_to_s(hash)
-      str = hash.reduce("") do |str, (key, value)|
-        if value.class == Mash
-          str
-        else
-          str + " #{key}=\"#{value}\","
-        end
-      end
-      str.chomp(',')
     end
   end
 end
