@@ -9,64 +9,25 @@ module WsHashie
       case name_s[-1, 1]
       when '?'
         key = name_s.chomp '?'
-        key? key
+        @hash.has_key?(key)
       when '='
         key = name_s.chomp '='
-        value! key, args[0]
+        @hash[key] = args[0]
       when '!'
-        key = (name_s.chomp '!').to_sym
+        key = name_s.chomp '!'
         @hash[key] ||= Mash.new
         @hash[key]
       when '_'
-        key = (name_s.chomp '_').to_sym
+        key = name_s.chomp '_'
         value = @hash[key]
         if value.class == Mash
           value
         else
           Mash.new
         end
-       
       else
-        key = name
-        value key
+        @hash[name_s]
       end
-    end
-
-    def inspect
-      inspect_s @hash
-    end
-
-    private
-    def value(key)
-      value = @hash[key.to_sym]
-      if value.class == Mash
-        value.inspect
-      else
-        value
-      end
-    end
-    
-    def value!(key, value)
-      @hash[key.to_sym] = value
-    end
-    
-    def key?(key)
-      !@hash[key.to_sym].nil?
-    end
-    
-    def inspect_s(hash)
-      "<#{self.class}#{hash_to_s hash}>"   
-    end
-    
-    def hash_to_s(hash)
-      str = hash.reduce("") do |str, (key, value)|
-        if value.class == Mash
-          str
-        else
-          str + " #{key}=\"#{value}\","
-        end
-      end
-      str.chomp(',')
     end
   end
 end
