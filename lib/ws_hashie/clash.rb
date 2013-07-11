@@ -20,7 +20,11 @@ module WsHashie
         self[key] = Clash.new(self)
         self[key]
       else
-        self[name] = args[0]
+        if self[name]
+          self[name].merge! args[0]
+        else
+          self[name] = args[0]
+        end
         self
       end
     end
