@@ -17,9 +17,9 @@ module WsHashie
         self[key]
       else
         if self[name]
-          self[name].merge! args[0]
+          self[name].merge! args.first
         else
-          self[name] = args[0]
+          self[name] = args.first
         end
         self
       end
