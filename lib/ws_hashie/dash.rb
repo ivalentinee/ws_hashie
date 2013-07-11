@@ -1,36 +1,46 @@
 module WsHashie
   class Dash
-    @@properties = Hash.new
-    @@required = Array.new
+    # @properties = Hash.new
+    # @required = Array.new
 
     def initialize(values = {})
-      @properties = @@properties.merge values
-      @@required.each {|name| argument_error(name) if @properties[name].nil?}
+      @values = properties.merge values
+      required.each {|name| argument_error(name) if @values[name].nil?}
     end
 
     def [](name)
-      if @@properties.has_key? name
-        @properties[name]
+      if properties.has_key? name
+        @values[name]
       else
         raise NoMethodError
       end
     end
 
+    def properties
+      self.class.instance_variable_get(:@properties)
+    end
+
+    def required
+      self.class.instance_variable_get(:@required)
+    end
+
     def self.property(name, options = {})
-      @@properties[name] = options[:default]
-      @@required << name if options[:required]
+      @properties ||= {}
+      @required ||= []
+      @properties[name] = options[:default]
+      @required << name if options[:required]
       define_method(name) do
-        if @properties.has_key? name
-          @properties[name]
+        if properties.has_key? name
+          @values[name]
         else
           argument_error name
         end
       end
       define_method("#{name}=") do |value|
-        if @@required.include?(name) && value.nil?
+        if required.include?(name) && value.nil?
           argument_error name
         else
-          @properties[name] = value
+          @values[name] = value
         end
       end
     end
