@@ -8,10 +8,6 @@ module WsHashie
       @parent
     end
 
-    def to_ary # for rspec
-      self.to_a
-    end
-
     def method_missing(name, *args, &block)
       name_s = name.to_s
       case name_s[-1, 1]

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe WsHashie::Trash do
+describe WsHashie::Clash do
   before do
     @c = WsHashie::Clash.new
   end
