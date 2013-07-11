@@ -1,8 +1,5 @@
 module WsHashie
   class Dash
-    # @properties = Hash.new
-    # @required = Array.new
-
     def initialize(values = {})
       @values = properties.merge values
       required.each {|name| argument_error(name) if @values[name].nil?}
