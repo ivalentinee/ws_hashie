@@ -4,4 +4,5 @@ module WsHashie
   autoload 'Mash', 'ws_hashie/mash'
   autoload 'Dash', 'ws_hashie/dash'
   autoload 'Trash', 'ws_hashie/trash'
+  autoload 'Clash', 'ws_hashie/clash'
 end
